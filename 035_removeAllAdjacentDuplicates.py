@@ -17,10 +17,6 @@ class Solution:
 if __name__ == "__main__":
     s = Solution()
 
-    print(
-        s.removeDuplicates("abbaca")
-    )
-
     assert s.removeDuplicates("abbaca") == "ca"
     assert s.removeDuplicates("azxxzy") == "ay"
 
