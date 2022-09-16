@@ -9,9 +9,10 @@ class Solution:
             d[s[j]] = j
             j += 1    
             if len(d) == k + 1:
-                d.pop(s[min(d.values())])
-                i += 1
-            if j - i> longest: 
+                cut_idx = min(d.values())
+                d.pop(s[cut_idx])
+                i = cut_idx + 1
+            if j - i > longest: 
                 longest = j - i                
                 
         return longest
@@ -22,5 +23,5 @@ if __name__ == "__main__":
     print(
         s.lengthOfLongestSubstringKDistinct('abaccc', 2),
         s.lengthOfLongestSubstringKDistinct('eceba', 2),
-        # s.lengthOfLongestSubstringKDistinct('cc', 1),
+        s.lengthOfLongestSubstringKDistinct('cc', 1),
     )        
