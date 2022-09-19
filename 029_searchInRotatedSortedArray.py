@@ -1,47 +1,44 @@
-binary_search = __import__('019_binarySearch')
-
 class Solution:
-    def __init__(self):
-        self.binary_searcher = binary_search.Solution()
-
-    def remake(self, nums):
-        if len(nums) < 2:
-            return 0, nums
-        if len(nums) == 2:
-            if nums[0] > nums[1]:
-                return 1, nums[::-1]
-            else:
-                return 0, nums
+    def findPivot(self, nums):
+        low = 0
+        high = len(nums) - 1
+        mid = int((high+low)/2)
+        visited = set()
         
-        pivot = -1
-        for i in range(1, len(nums), 1):
-            if nums[i] < nums[i-1]:
-                pivot = i
-        if pivot != -1:
-            return pivot, nums[-(len(nums)-pivot):] + nums[:pivot]
-        else:
-            return 0, nums
+        while mid not in visited:
+            if nums[mid] > nums[0]:
+                low = mid
+            else:
+                high = mid
+            visited.add(mid)
+            mid = int((high+low)/2)
 
+        return mid
+    
+    def binSearch(self, nums, target):
+        low = 0
+        high = len(nums) - 1
+        
+        while low <= high:
+            mid = int((low+high)/2)
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                high = mid - 1
+            else:
+                low = mid + 1
+        
+        return -1
+    
     def search(self, nums: list, target: int) -> int:
-        pivot, nums = self.remake(nums)
-        idx = self.binary_searcher.search(nums, target)
-
-        if idx != -1:
-            tail_nums = len(nums) - pivot
-            if idx < tail_nums:
-                return idx + pivot
+        if nums[0] > nums[-1]:
+            pivot = self.findPivot(nums)
+            if target >= nums[0]:
+                return self.binSearch(nums[:pivot+1], target)
             else:
-                return idx - tail_nums
+                idx = self.binSearch(nums[pivot+1:], target)
+                if idx == -1:
+                    return idx
+                return idx + pivot + 1
         else:
-            return -1
-
-
-        
-
-if __name__ == '__main__':
-    s = Solution()
-    assert s.search([4,5,6,7,0,1,2], 1) == 5
-    assert s.search([3,5,1], 1) == 2
-    assert s.search([1,3,5], 1) == 0
-
-    print('TEST PASSED!')
+            return self.binSearch(nums, target)
