@@ -17,6 +17,7 @@ def solution(leftCorns: dict, rightCorns: dict, minLocation: int, maxLocation:in
             maxStepRight = max(maxStepRight, i - startLocation)
 
     maxAmount = 0
+    
     # first go left
     for leftStep in leftCornPrefixSum:
         if leftStep >= winSize / 2:
@@ -25,6 +26,7 @@ def solution(leftCorns: dict, rightCorns: dict, minLocation: int, maxLocation:in
             while maxStepRight not in rightCornPrefixSum or maxStepRight > winSize - leftStep * 2:
                 maxStepRight -= 1
             maxAmount = max(maxAmount, leftCornPrefixSum[leftStep] + rightCornPrefixSum[maxStepRight])
+    
     # first go right
     for rightStep in rightCornPrefixSum:
         if rightStep >= winSize / 2:
@@ -41,7 +43,7 @@ if __name__ == "__main__":
     input = open('173_aCorn.txt').read().splitlines()
     nCase = int(input[0])
     current_line = 1
-    caseId = 0
+    caseId = 1
     while nCase > 0:
         nCorn, startLocation, winSize = input[current_line].split()
         nCorn = int(nCorn)
